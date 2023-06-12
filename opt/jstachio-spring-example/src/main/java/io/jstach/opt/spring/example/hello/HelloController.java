@@ -100,6 +100,7 @@ public class HelloController {
 	 */
 	@SuppressWarnings("exports")
 	@GetMapping(value = "/mvc")
+	@SuppressWarnings("exports")
 	public View mvc() {
 		return new HelloModelAndView("Spring Boot MVC is now JStachioed!");
 	}

@@ -1,4 +1,4 @@
-package io.jstach.opt.spring.example;
+package io.jstach.opt.spring.boot.webmvc;
 
 import java.util.List;
 
@@ -27,18 +27,20 @@ public class SpringTemplateConfig {
 
 	/**
 	 * Creates a services based on spring objects.
+	 * 
 	 * @param environment used for config
-	 * @param templates found templates via component scanning
+	 * @param templates   found templates via component scanning
 	 * @return the services
 	 */
 	@Bean
-	public SpringJStachioExtension jstachioService(@SuppressWarnings("exports") Environment environment,
-			List<Template<?>> templates) {
+	@SuppressWarnings("exports")
+	public SpringJStachioExtension jstachioService(Environment environment, List<Template<?>> templates) {
 		return new SpringJStachioExtension(environment, templates);
 	}
 
 	/**
 	 * Creates jstachio from found plugins
+	 * 
 	 * @param services plugins
 	 * @return spring version fo jstachio
 	 */
@@ -52,6 +54,7 @@ public class SpringTemplateConfig {
 
 	/**
 	 * The JMustache plugin to render templates while editing in development mode.
+	 * 
 	 * @return jmustache plugin
 	 */
 	@Bean
