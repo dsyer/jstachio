@@ -98,7 +98,6 @@ public class HelloController {
 	 * @see JStachioHttpMessageConverter
 	 * @see HelloModelAndView
 	 */
-	@SuppressWarnings("exports")
 	@GetMapping(value = "/mvc")
 	@SuppressWarnings("exports")
 	public View mvc() {
