@@ -1,4 +1,6 @@
 import io.jstach.jstache.JStacheConfig;
+import io.jstach.jstache.JStacheFlags;
+import io.jstach.jstache.JStacheFlags.Flag;
 
 /**
  * Spring Web MVC example app for JStachio:
@@ -31,6 +33,7 @@ import io.jstach.jstache.JStacheConfig;
  * @provides io.jstach.jstachio.spi.TemplateProvider this is needed for modular applications.
  */
 @JStacheConfig(using = io.jstach.opt.spring.SpringJStacheConfig.class)
+@JStacheFlags(flags = Flag.CONTEXT_SUPPORT)
 module io.jstach.opt.spring.example {
 	
 	requires transitive io.jstach.opt.spring.webmvc;

@@ -1,5 +1,7 @@
 package io.jstach.opt.spring.example.message;
 
+import java.util.Map;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.servlet.View;
@@ -39,6 +41,17 @@ public class MessageController {
 	@GetMapping(value = "/msg")
 	public MessagePage msg() {
 		return new MessagePage();
+	}
+
+	/**
+	 * Here we use the return value type to construct a {@link View} that will be
+	 * rendered.
+	 * @return the jstache model that will be rendered
+	 */
+	@GetMapping(value = "/context")
+	public Context context(Map<String, Object> model) {
+		model.put("message", "Context");
+		return new Context();
 	}
 
 }

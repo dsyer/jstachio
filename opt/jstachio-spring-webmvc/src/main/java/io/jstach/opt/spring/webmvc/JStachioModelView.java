@@ -13,6 +13,9 @@ import io.jstach.jstache.JStache;
 import io.jstach.jstache.JStacheInterfaces;
 import io.jstach.jstachio.JStachio;
 import io.jstach.jstachio.Output.CloseableEncodedOutput;
+import io.jstach.jstachio.context.ContextNode;
+import io.jstach.jstachio.output.ContextAwareOutput;
+import io.jstach.jstachio.output.ContextAwareOutput.ContextEncodedOutput;
 import io.jstach.opt.spring.web.JStachioHttpMessageConverter;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -59,9 +62,23 @@ public interface JStachioModelView extends View {
 		if (charset == null) {
 			charset = StandardCharsets.UTF_8;
 		}
-		try (var o = createOutput(charset, response)) {
-			jstachio().write(model(), o);
-		}
+		ContextEncodedOutput<IOException, CloseableEncodedOutput<IOException>> output = createContextAwareOutput(
+				charset, response, model);
+		jstachio().write(model(), output);
+		output.getOutput().close();
+	}
+
+	/**
+	 * Creates the output from the servlet response to use for rendering.
+	 * @param charset charset resolved from {@link #getMediaType()}
+	 * @param response servlet response
+	 * @param model MVC model
+	 * @return output that should be closed when finished
+	 */
+	@SuppressWarnings("exports")
+	default ContextEncodedOutput<IOException, CloseableEncodedOutput<IOException>> createContextAwareOutput(
+			Charset charset, HttpServletResponse response, Map<String, ?> model) {
+		return ContextAwareOutput.of(createOutput(charset, response), ContextNode.of(model::get));
 	}
 
 	/**
